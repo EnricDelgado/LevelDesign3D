@@ -1,6 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StaticEnemyController : MonoBehaviour
 {
@@ -29,6 +29,8 @@ public class StaticEnemyController : MonoBehaviour
         else
         {
             rotationSpeed = 0;
+            // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerRespawnController>().Respawn();
             Debug.Log(transform.name + " detected player");
         }
     }
