@@ -128,7 +128,7 @@ public class PlayerController : MonoBehaviour
         RaycastHit l_Hit;
         if (Physics.Raycast(l_Ray, out l_Hit, 20))
         {
-
+            Debug.Log("Da");
             if (l_Hit.collider.name == "1")
             {
                 if (code.fNum == 0) code.fNum = 1;
