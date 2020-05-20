@@ -7,32 +7,29 @@ public class StaticEnemyController : MonoBehaviour
     public bool playerDetected = false;
     public float rotationSpeed = 2f;
     public float rotationAngle = 45;
-    public float rotationCooldown = 4;
+    public float rotationCooldown = 1;
 
     bool turnLeft = false, turnRight = true;
 
     // Update is called once per frame
     void Update()
     {
-        while(!playerDetected)
+        if(!playerDetected)
         {
             if(turnRight == true)
             {
-                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x, transform.rotation.y + rotationAngle, transform.rotation.z), rotationSpeed);
-                turnRight = false;
-                StartCoroutine(RotationCooldown(turnLeft, rotationCooldown));
+                StartCoroutine(TurnRight(rotationCooldown));
+
             }
             if(turnLeft == true)
             {
-                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x, transform.rotation.y - rotationAngle, transform.rotation.z), rotationSpeed);
-                turnLeft = false;
-                StartCoroutine(RotationCooldown(turnRight, rotationCooldown));
+                StartCoroutine(TurnLeft(rotationCooldown));
             }
         }
-        if(playerDetected)
+        else
         {
             rotationSpeed = 0;
-            Debug.Log("PlayerDetected");
+            Debug.Log(transform.name + " detected player");
         }
     }
 
@@ -40,5 +37,25 @@ public class StaticEnemyController : MonoBehaviour
     {
         yield return new WaitForSeconds(Cooldown);
         rotation = true;
+    }
+
+    IEnumerator TurnRight(float Cooldown)
+    {
+        Debug.Log(transform.name + " turning right");
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x, transform.rotation.y + rotationAngle, transform.rotation.z), rotationSpeed * Time.deltaTime);
+
+        yield return new WaitForSeconds(Cooldown);
+        turnRight = false;
+        turnLeft = true;
+    }
+
+    IEnumerator TurnLeft(float Cooldown)
+    {
+        Debug.Log(transform.name + " turning left");
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x, transform.rotation.y - rotationAngle, transform.rotation.z), rotationSpeed * Time.deltaTime);
+
+        yield return new WaitForSeconds(Cooldown);
+        turnLeft = false;
+        turnRight = true;
     }
 }
