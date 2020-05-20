@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
     WallrunMovement wallrun;
     SurfaceSwimmingMovement swimming;
 
+    public PuzzleCode code;
+
     public void ChangeStatus(Status s)
     {
         if (status == s) return;
@@ -113,9 +115,84 @@ public class PlayerController : MonoBehaviour
                 moveType.Check(canInteract);
         }
 
+        if (Input.GetKeyDown(KeyCode.F)) Check();
+
         //Misc
         UpdateLean();
         UpdateCamLevel();
+    }
+
+    void Check()
+    {
+        Ray l_Ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f)); ;
+        RaycastHit l_Hit;
+        if (Physics.Raycast(l_Ray, out l_Hit, 20))
+        {
+
+            if (l_Hit.collider.name == "1")
+            {
+                if (code.fNum == 0) code.fNum = 1;
+                else if (code.sNum == 0) code.sNum = 1;
+                else if (code.tNum == 0) code.tNum = 1;
+                else if (code.qNum == 0) code.qNum = 1;
+            }
+            if (l_Hit.collider.name == "2")
+            {
+                if (code.fNum == 0) code.fNum = 2;
+                else if (code.sNum == 0) code.sNum = 2;
+                else if (code.tNum == 0) code.tNum = 2;
+                else if (code.qNum == 0) code.qNum = 2;
+            }
+            if (l_Hit.collider.name == "3")
+            {
+                if (code.fNum == 0) code.fNum = 3;
+                else if (code.sNum == 0) code.sNum = 3;
+                else if (code.tNum == 0) code.tNum = 3;
+                else if (code.qNum == 0) code.qNum = 3;
+            }
+            if (l_Hit.collider.name == "4")
+            {
+                if (code.fNum == 0) code.fNum = 4;
+                else if (code.sNum == 0) code.sNum = 4;
+                else if (code.tNum == 0) code.tNum = 4;
+                else if (code.qNum == 0) code.qNum = 4;
+            }
+            if (l_Hit.collider.name == "5")
+            {
+                if (code.fNum == 0) code.fNum = 5;
+                else if (code.sNum == 0) code.sNum = 5;
+                else if (code.tNum == 0) code.tNum = 5;
+                else if (code.qNum == 0) code.qNum = 5;
+            }
+            if (l_Hit.collider.name == "6")
+            {
+                if (code.fNum == 0) code.fNum = 6;
+                else if (code.sNum == 0) code.sNum = 6;
+                else if (code.tNum == 0) code.tNum = 6;
+                else if (code.qNum == 0) code.qNum = 6;
+            }
+            if (l_Hit.collider.name == "7")
+            {
+                if (code.fNum == 0) code.fNum = 7;
+                else if (code.sNum == 0) code.sNum = 7;
+                else if (code.tNum == 0) code.tNum = 7;
+                else if (code.qNum == 0) code.qNum = 7;
+            }
+            if (l_Hit.collider.name == "8")
+            {
+                if (code.fNum == 0) code.fNum = 8;
+                else if (code.sNum == 0) code.sNum = 8;
+                else if (code.tNum == 0) code.tNum = 8;
+                else if (code.qNum == 0) code.qNum = 8;
+            }
+            if (l_Hit.collider.name == "9")
+            {
+                if (code.fNum == 0) code.fNum = 9;
+                else if (code.sNum == 0) code.sNum = 9;
+                else if (code.tNum == 0) code.tNum = 9;
+                else if (code.qNum == 0) code.qNum = 9;
+            }
+        }
     }
 
     void UpdateInteraction()
