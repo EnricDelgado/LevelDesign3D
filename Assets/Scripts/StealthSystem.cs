@@ -4,15 +4,61 @@ using UnityEngine;
 
 public class StealthSystem : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public LayerMask EnemyLayer;
+    GameObject KeyEnemy;
 
-    // Update is called once per frame
+    bool isCrouching;
+    
+    bool nearEnemy;
+    bool playerDetected;
+
     void Update()
     {
+        isCrouching = GetComponent<PlayerMovement>().isCrouching;
+
+        playerDetected = false;
+
+        if(nearEnemy)
+        {
+            if(isCrouching)
+            {
+                Debug.Log("Steal now");
+                playerDetected = false;
+            }
+            else
+            {
+                Debug.Log("Player detected");
+                playerDetected = true;
+            }
+        }
         
+        Debug.Log("Player detected: " + playerDetected);
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if(other.gameObject.layer == EnemyLayer)
+        {
+            Debug.Log("Near enemy");
+
+            nearEnemy = true;
+
+            if(other.tag == "Key")
+            {
+                this.GetComponent<StealManager>().nearKeyEnemy = false;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other) 
+    {
+        if(other.gameObject.layer == EnemyLayer)
+        {
+            nearEnemy = false;
+
+            if(other.tag == "Key")
+            {
+                this.GetComponent<StealManager>().nearKeyEnemy = false;
+            }
+        }
     }
 }

@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class StealController : MonoBehaviour
 {
-    Collider StealArea;
     bool isCrouching = false;
-    bool nearEnemy = false;
+    public bool nearKeyEnemy = false;
 
-    GameObject KeyEnemy;
+    public GameObject KeyEnemy;
     GameObject[] enemies;
     Color enemyColor;
     bool changeColor;
@@ -16,8 +15,6 @@ public class StealController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StealArea = GetComponent<SphereCollider>();
-
         enemies = GameObject.FindGameObjectsWithTag("Key");
         enemyColor = enemies[0].GetComponent<Renderer>().material.GetColor("_Color");
     }
@@ -27,10 +24,9 @@ public class StealController : MonoBehaviour
     {
         isCrouching = GetComponent<PlayerMovement>().isCrouching;
 
-        // Debug.Log("Is crouching: " + isCrouching);
         changeColor = false;
 
-        if(nearEnemy)
+        if(nearKeyEnemy)
         {
             if(isCrouching)
             {
@@ -55,23 +51,6 @@ public class StealController : MonoBehaviour
             {
                 enemy.GetComponent<Renderer>().material.SetColor("_Color", enemyColor);
             }
-        }
-    }
-
-    private void OnTriggerEnter(Collider other) {
-        Debug.Log(other.name + " entering trigger");
-        if(other.tag == "Key")
-        {
-            Debug.Log("Near enemy");
-            nearEnemy = true;
-            KeyEnemy = other.gameObject;
-        }
-    }
-
-    private void OnTriggerExit(Collider other) {
-        if(other.tag == "Key")
-        {
-            nearEnemy = false;
         }
     }
 }
