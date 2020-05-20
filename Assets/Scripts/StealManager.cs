@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StealController : MonoBehaviour
+public class StealManager : MonoBehaviour
 {
     bool isCrouching = false;
     public bool nearKeyEnemy = false;
@@ -28,6 +28,8 @@ public class StealController : MonoBehaviour
 
         if(nearKeyEnemy)
         {
+            Debug.Log("Near Key enemy");
+            
             if(isCrouching)
             {
                 Debug.Log("Steal now");
@@ -37,6 +39,7 @@ public class StealController : MonoBehaviour
             {
                 Debug.Log("Player detected");
                 changeColor = false;
+                GetComponent<StealthSystem>().playerDetected = true;
             }
         }
         

@@ -6,59 +6,73 @@ public class StealthSystem : MonoBehaviour
 {
     public LayerMask EnemyLayer;
     GameObject KeyEnemy;
+    GameObject CurrentEnemy = null;
 
     bool isCrouching;
     
     bool nearEnemy;
-    bool playerDetected;
+    public bool playerDetected = false;
 
     void Update()
     {
         isCrouching = GetComponent<PlayerMovement>().isCrouching;
 
-        playerDetected = false;
-
         if(nearEnemy)
         {
             if(isCrouching)
             {
-                Debug.Log("Steal now");
                 playerDetected = false;
             }
             else
             {
-                Debug.Log("Player detected");
                 playerDetected = true;
             }
         }
         
+
+        if(playerDetected)
+        {
+            if(CurrentEnemy.GetComponent<StaticEnemyController>() != null)
+            {
+                CurrentEnemy.GetComponent<StaticEnemyController>().playerDetected = playerDetected;
+            }
+        }
+
+        #region Debug
         Debug.Log("Player detected: " + playerDetected);
+        Debug.Log("Current enemy: " + CurrentEnemy);
+        #endregion
     }
 
-    private void OnTriggerEnter(Collider other) {
-        if(other.gameObject.layer == EnemyLayer)
+    private void OnTriggerEnter(Collider other) 
+    {
+        if(other.tag == "Key" || other.tag == "Enemy") CurrentEnemy = other.gameObject;
+
+        if(other.tag == "Key")
+        {
+            GetComponent<StealManager>().KeyEnemy = other.gameObject;
+            GetComponent<StealManager>().nearKeyEnemy = true;
+        }
+        else if (other.tag == "Enemy")
         {
             Debug.Log("Near enemy");
-
             nearEnemy = true;
-
-            if(other.tag == "Key")
-            {
-                this.GetComponent<StealManager>().nearKeyEnemy = false;
-            }
         }
     }
 
     private void OnTriggerExit(Collider other) 
     {
-        if(other.gameObject.layer == EnemyLayer)
-        {
-            nearEnemy = false;
+        if(other.tag == "Key" || other.tag == "Enemy") CurrentEnemy = null;
 
-            if(other.tag == "Key")
-            {
-                this.GetComponent<StealManager>().nearKeyEnemy = false;
-            }
+        if(other.tag == "Key")
+        {
+            GetComponent<StealManager>().KeyEnemy = other.gameObject;
+            GetComponent<StealManager>().nearKeyEnemy = false;
+        }
+        else if (other.tag == "Enemy")
+        {
+            Debug.Log("Far enemy");
+            nearEnemy = false;
         }
     }
 }
