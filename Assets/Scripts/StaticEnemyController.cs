@@ -30,7 +30,7 @@ public class StaticEnemyController : MonoBehaviour
         {
             rotationSpeed = 0;
             // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerRespawnController>().Respawn();
+            // GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerRespawnController>().Respawn();
             Debug.Log(transform.name + " detected player");
         }
     }
@@ -43,7 +43,7 @@ public class StaticEnemyController : MonoBehaviour
 
     IEnumerator TurnRight(float Cooldown)
     {
-        Debug.Log(transform.name + " turning right");
+        // Debug.Log(transform.name + " turning right");
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x, transform.rotation.y + rotationAngle, transform.rotation.z), rotationSpeed * Time.deltaTime);
 
         yield return new WaitForSeconds(Cooldown);
@@ -53,7 +53,7 @@ public class StaticEnemyController : MonoBehaviour
 
     IEnumerator TurnLeft(float Cooldown)
     {
-        Debug.Log(transform.name + " turning left");
+        // Debug.Log(transform.name + " turning left");
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x, transform.rotation.y - rotationAngle, transform.rotation.z), rotationSpeed * Time.deltaTime);
 
         yield return new WaitForSeconds(Cooldown);

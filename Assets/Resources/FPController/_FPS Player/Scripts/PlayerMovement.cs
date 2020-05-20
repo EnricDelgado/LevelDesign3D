@@ -33,6 +33,8 @@ public class PlayerMovement : InterpolatedTransform
     private float jumpPower;
     UnityEvent onReset = new UnityEvent();
 
+    public bool isCrouching = false;
+
     public override void OnEnable()
     {
         base.OnEnable();
@@ -101,7 +103,8 @@ public class PlayerMovement : InterpolatedTransform
             return;
 
         float speed = (!sprint) ? walkSpeed : runSpeed;
-        if (crouching) speed = crouchSpeed;
+        if (crouching) {speed = crouchSpeed; isCrouching = true;}
+        else {isCrouching = false;}
 
         if (grounded)
         {
